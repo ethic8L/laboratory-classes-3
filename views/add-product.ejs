@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title><%= headTitle %></title>
+    <link rel="stylesheet" href="/public/css/main.css" />
+  </head>
+  <body>
+    <% include ./partials/navigation.ejs %>
+    <main>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/product/new">Newest product</a>
+        <a href="/logout">Logout</a>
+      </nav>
+      <h1 class="heading">Add product</h1>
+      <form class="form" action="/product/add" method="POST">
+        <div class="form__group">
+            <label class="form__label">Name</label><input class="form__input" type="text" name="name" />
+        </div>
+        <div class="form__group">
+            <label class="form__label">Description</label><input class="form__input" type="text" name="description" />
+        </div>
+        <button class="button" type="submit">Add</button>
+      </form>
+    </main>
+  </body>
+</html>

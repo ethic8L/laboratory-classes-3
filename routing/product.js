@@ -1,37 +1,49 @@
-const fileSystem = require("fs");
-const { STATUS_CODE } = require("../constants/statusCode");
-
-const path = require("path");
-
 const express = require("express");
-
-const renderNewProductPage = require("../views/renderNewProductPage");
-
 const router = express.Router();
 
-router.get("/add", (_request, response) => {
-  response.sendFile(path.join(__dirname, "../views", "add-product.html"));
+const { STATUS_CODE } = require("../constants/statusCode");
+
+
+const productsSlice = {
+  products: [],
+  newestProduct: null,
+};
+
+const MENU_LINKS = [
+  { path: "/", label: "Home" },
+  { path: "/product", label: "Products" },
+  { path: "/logout", label: "Logout" },
+];
+
+
+router.get("/add", (_req, res) => {
+  res.render("add-product", {
+    headTitle: "Add Product",
+    path: "/product/add",
+    menuLinks: MENU_LINKS,
+    activeLinkPath: "/product/add",
+  });
 });
 
-router.post("/add", (request, response) => {
-  const { name, description } = request.body;
 
-  fileSystem.writeFile(
-    "product.txt",
-    `Name: ${name}, Description: ${description}`,
-    (error) => {
-      if (error) {
-        throw error;
-      }
+router.post("/add", (req, res) => {
+  const { name, description } = req.body;
+  const newProduct = { name, description };
 
-      response.status(STATUS_CODE.FOUND).redirect("/product/new");
-    }
-  );
+  productsSlice.newestProduct = newProduct;
+  productsSlice.products.push(newProduct);
+
+  res.status(STATUS_CODE.FOUND).redirect("/product/new");
 });
 
-router.get("/new", (_request, response) => {
-  fileSystem.readFile("product.txt", "utf-8", (_error, data) => {
-    response.send(renderNewProductPage(data));
+
+router.get("/new", (_req, res) => {
+  res.render("new-product", {
+    headTitle: "New Product",
+    path: "/product/new",
+    menuLinks: MENU_LINKS,
+    activeLinkPath: "/product/new",
+    newestProduct: productsSlice.newestProduct,
   });
 });
 

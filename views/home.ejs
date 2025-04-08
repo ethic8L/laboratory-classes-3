@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/public/css/main.css" />
+    <title><%= headTitle %></title>
+  </head>
+  <body>
+    <% include ./partials/navigation.ejs %>
+    <main>
+      <h1 class="heading">Home</h1>
+      <nav>
+        <a href="/product/add">Add product</a>
+        <br />
+        <a href="/product/new">Newest product</a>
+        <br />
+        <a href="/logout">Logout</a>
+      </nav>
+    </main>
+  </body>
+</html>

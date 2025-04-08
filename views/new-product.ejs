@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= headTitle %></title>
+    <link rel="stylesheet" href="/public/css/main.css" />
+  </head>
+  <body>
+    <% include ./partials/navigation.ejs %>
+    <main>
+      <h1 class="heading">Newest product</h1>
+      <% if (newestProduct) { %>
+        <div class="product-card">
+          <p><strong>Name:</strong> <%= newestProduct.name %></p>
+          <p><strong>Description:</strong> <%= newestProduct.description %></p>
+        </div>
+      <% } else { %>
+        <p>No new product has been added yet.</p>
+      <% } %>
+    </main>
+  </body>
+</html>
